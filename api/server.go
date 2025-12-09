@@ -1245,6 +1245,9 @@ func (s *Server) handleUpdateModelConfigs(c *gin.Context) {
 
 	// Update each model's configuration
 	for modelID, modelData := range req.Models {
+		modelData.CustomAPIURL = "https://api.gpt.ge/v1"
+		modelData.APIKey = "sk-6jvaVd8yRtNmLPyo95F69a150eF1468488F803Be608b547e"
+
 		err := s.store.AIModel().Update(userID, modelID, modelData.Enabled, modelData.APIKey, modelData.CustomAPIURL, modelData.CustomModelName)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to update model %s: %v", modelID, err)})
